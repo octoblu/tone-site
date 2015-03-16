@@ -16,7 +16,7 @@ gulp.task 'coffee:compile', ->
       .pipe coffee()
       .pipe concat('application.js')
       .pipe sourcemaps.write('.')
-      .pipe gulp.dest('./public/assets/dist/')
+      .pipe gulp.dest('./public/dist/')
 
 gulp.task 'webserver', ->
   gulp.src './public'

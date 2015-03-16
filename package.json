@@ -4,6 +4,7 @@
   "description": "Website that creates a meshblu device and produces tones ",
   "main": "index.js",
   "scripts": {
+    "start": "gulp watch",
     "test": "mocha"
   },
   "repository": {
@@ -27,5 +28,8 @@
     "gulp-plumber": "^1.0.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-webserver": "^0.9.0"
+  },
+  "dependencies": {
+    "coffee-script": "^1.9.1"
   }
 }
