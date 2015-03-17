@@ -2,6 +2,7 @@ language: node_js
 sudo: false
 node_js:
 - '0.10'
+before_deploy: mkdir -p build && tar czf build/public.tar.gz public
 deploy:
   provider: s3
   access_key_id: AKIAIT4X4NDGM2WVL6VA
@@ -10,7 +11,7 @@ deploy:
   bucket: tone.octoblu.com
   endpoint: tone.octoblu.com.s3-website-us-west-2.amazonaws.com
   region: us-west-2
-  local-dir: public
+  local-dir: build
   skip_cleanup: true
   acl: public_read
   on:
