@@ -1,6 +1,6 @@
 config =
-  server: 'meshblu.octoblu.com'
-  port:   80
+  server: 'wss://meshblu.octoblu.com'
+  port:   443
   type:   'device:tone'
   uuid:   '17f87030-cc38-11e4-b66b-a374617a4125'
   token:  '7dfc1544a258ddacb1adb825681b9fd12e5548fa'
