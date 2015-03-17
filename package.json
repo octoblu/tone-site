@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp watch",
-    "test": "exit 0"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
