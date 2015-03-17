@@ -1,0 +1,14 @@
+language: node_js
+sudo: false
+node_js:
+- '0.10'
+deploy:
+  provider: s3
+  access_key_id: AKIAIT4X4NDGM2WVL6VA
+  secret_access_key:
+    secure: fbDjFCr1so0Z5K9E2Tihle5X0JKXjFFT8Ve7WEVGMus+1MRfFaZOqUXBwxDyvUI25ob35lmuzXosCGgvlfQHrBHw4SxsBCMUYKU3jxmFgiA9qjHxytoNYB0BQIZNqQ9FjnrnTqG45zFgDBpXSGgqR0UZT66QNepLf3qWfAQFqkI=
+  bucket: tone.octoblu.com
+  local-dir: public
+  acl: public_read
+  on:
+    branch: master
