@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<meta charset="UTF-8">
   <title>Meshblu Tone Device</title>
 </head>
 <body>
-
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+<div class="container">
+	<div class="row">
+    	<h1 class="text-center">Tone Device Generator</h1>
+		<div class="table-responsive">
+			<table class="table">
+			  <tr>
+			    <th>Device</th>
+			    <td class="column-content meshblu-uuid"></td>
+			  </tr>
+			   <tr>
+			    <th>Token</th>
+			    <td class="column-content meshblu-token"></td>
+			  </tr>
+			</table>
+		</div>
+		<div>
+		  <p>
+		  	Go to <a href="https://app.octoblu.com">app.octoblu.com</a> and claim this device to send it tones
+		  </p>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript" src="//d1g8h12lk9ydf.cloudfront.net/js/v1.19.0/meshblu.bundle.js"></script>
 <script type="text/javascript" src="/js/Tone.js"></script>
