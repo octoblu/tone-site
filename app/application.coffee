@@ -66,10 +66,10 @@ $ ->
     , '8n'
 
     conn.on 'message', (message) =>
-      if (message.topic === 'set-property') {
+      if message.topic == 'set-property'
         synth1[message.payload.property] = message.payload.value;
         synth2[message.payload.property] = message.payload.value;
-        return;
-      }
+        return
+
       sound[message.topic]?(message.payload)
 
