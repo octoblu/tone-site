@@ -13,7 +13,7 @@ gulp.task 'coffee:compile', ->
 
   gulp.src files
       .pipe plumber()
-      .pipe coffee()
+      .pipe coffee(bare: true)
       .pipe concat('application.js')
       .pipe sourcemaps.write('.')
       .pipe gulp.dest('./public/dist/')
