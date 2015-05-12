@@ -25,6 +25,8 @@ class Sound
 
 $ ->
   sound = new Sound
+  synth1 = null
+  synth2 = null
 
   Tone.Transport.start()
 
