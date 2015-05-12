@@ -23,10 +23,11 @@ class Sound
     @synths[name] = synth
     synth
 
+synth1 = null
+synth2 = null
+
 $ ->
   sound = new Sound
-  synth1 = null
-  synth2 = null
 
   Tone.Transport.start()
 
