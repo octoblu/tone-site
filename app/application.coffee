@@ -30,16 +30,16 @@ $ ->
 
   if $.cookie 'meshblu-tone'
     config = JSON.parse $.cookie 'meshblu-tone'
-  else  
+  else
     config =
       server: 'wss://meshblu.octoblu.com'
       port: 443
-      type: 'device:tone' 
-  
-  conn = meshblu.createConnection config 
+      type: 'device:tone'
+
+  conn = meshblu.createConnection config
 
   conn.on 'ready', =>
-    toneDevice = _.extend  
+    toneDevice = _.extend
                   uuid: conn.options.uuid
                   token: conn.options.token
                   , config
@@ -47,7 +47,7 @@ $ ->
 
     $.cookie 'meshblu-tone', JSON.stringify toneDevice
 
-    $(".meshblu-uuid").text toneDevice.uuid 
+    $(".meshblu-uuid").text toneDevice.uuid
     $(".meshblu-token").text toneDevice.token
 
     synth1 = new Tone.MonoSynth()
@@ -64,5 +64,10 @@ $ ->
     , '8n'
 
     conn.on 'message', (message) =>
+      if (message.topic === 'set-property') {
+        synth1[message.payload.property] = message.payload.value;
+        synth2[message.payload.property] = message.payload.value;
+        return;
+      }
       sound[message.topic]?(message.payload)
 
