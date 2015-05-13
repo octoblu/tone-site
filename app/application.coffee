@@ -1,43 +1,63 @@
+guid = ->
+  s4 = ->
+    Math.floor((1 + Math.random()) * 0x10000).toString(16).substring 1
+
+  s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
 
 
-class Sound
-  constructor: ->
-    @synths = {}
+class SoundDevice
+  constructor: (options) ->
+    @type = options.type
+    @uuid = options.uuid
+    @synth = @createDevice options
 
-  attack: (notes) =>
-    _.each notes, (note, synthKey) =>
-      synth = @synth synthKey
-      return unless synth?
-      synth.triggerAttack note, Tone.Transport.now()
+  createDevice: (options) =>
+    klass = Tone[@type]
+    console.log "Create #{@type} with #{options.initOptions}"
+    obj = new klass options.initOptions...
+    obj?.toMaster()
+    obj?.start?()
+    obj
+
+  update: (options) =>
+    @[options.action]? options
+
+  attack: (options) =>
+    _.each options.notes, (note) =>
+      @synth.triggerAttack note, Tone.Transport.now()
 
   release: (options) =>
-    synth = @synth(options.synth)
-    return unless synth?
-    synth.triggerRelease Tone.Transport.now()
+    @synth.triggerRelease Tone.Transport.now()
 
-  synth: (name) =>
-    return @synths[name] if @synths[name]?
+  attackWithRelease: (options) =>
+    _.each options.notes, (note) =>
+      @synth.triggerAttackRelease note.note, note.duration, Tone.Transport.now()
 
-    synth = new Tone.MonoSynth()
-    synth.toMaster()
-    @synths[name] = synth
-    synth
+  frequency: (options) =>
+    @synth.frequency.value = options.frequency
+    Tone.Transport.setTimeout =>
+      @synth.stop()
+    , 1
+
+  start: =>
+    @synth.start()
+
+  stop: =>
+    @synth.stop()
 
 synth1 = null
 synth2 = null
+devices = {}
 
 $ ->
-  sound = new Sound
-
   Tone.Transport.start()
 
-  if $.cookie 'meshblu-tone'
-    config = JSON.parse $.cookie 'meshblu-tone'
-  else
-    config =
-      server: 'wss://meshblu.octoblu.com'
-      port: 443
-      type: 'device:tone'
+  config =
+    server: 'wss://meshblu.octoblu.com'
+    port: 443
+    type: 'device:tone'
+    uuid: '450dfe26-8261-4ecd-822e-2ece073e5ca8'
+    token: 'b810ff4dcb79530a34660b08eea575f1c82f3619'
 
   conn = meshblu.createConnection config
 
@@ -47,8 +67,6 @@ $ ->
                   token: conn.options.token
                   , config
     console.log 'Device Config', toneDevice
-
-    $.cookie 'meshblu-tone', JSON.stringify toneDevice
 
     $(".meshblu-uuid").text toneDevice.uuid
     $(".meshblu-token").text toneDevice.token
@@ -66,11 +84,24 @@ $ ->
       synth2.triggerAttackRelease("C3", "2n", Tone.Transport.now());
     , '8n'
 
-    conn.on 'message', (message) =>
-      if message.topic == 'set-property'
-        synth1[message.payload.property] = message.payload.value;
-        synth2[message.payload.property] = message.payload.value;
-        return
+  getOrCreateDevice = (options) =>
+    options?.uuid ?= guid()
+    devices[options.uuid] ?= new SoundDevice options
+    devices[options.uuid]
 
-      sound[message.topic]?(message.payload)
+  conn.on 'message', (message) =>
+    console.log 'message', message
+    payload = message.payload
+    device = getOrCreateDevice payload
 
+    if message.topic == 'start'
+      device?.start()
+      return
+
+    if message.topic == 'stop'
+      device?.stop()
+      return
+
+    if message.topic == 'update'
+      device?.update payload
+      return
