@@ -35,9 +35,13 @@ class SoundDevice
 
   frequency: (options) =>
     @synth.frequency.value = options.frequency
-    Tone.Transport.setTimeout =>
-      @synth.stop()
-    , 1
+    unless options.skipTimeout
+      Tone.Transport.setTimeout =>
+        @synth.stop()
+      , 1
+
+  width: (options) =>
+    @synth.width.value = options.width
 
   start: =>
     @synth.start()
