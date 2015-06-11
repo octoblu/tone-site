@@ -4,22 +4,21 @@ node_js:
 - '0.10'
 before_deploy: mkdir -p build && tar czf build/public.tar.gz public
 deploy:
-  - provider: s3
-    access_key_id: AKIAIT4X4NDGM2WVL6VA
-    secret_access_key:
-      secure: fbDjFCr1so0Z5K9E2Tihle5X0JKXjFFT8Ve7WEVGMus+1MRfFaZOqUXBwxDyvUI25ob35lmuzXosCGgvlfQHrBHw4SxsBCMUYKU3jxmFgiA9qjHxytoNYB0BQIZNqQ9FjnrnTqG45zFgDBpXSGgqR0UZT66QNepLf3qWfAQFqkI=
-    bucket: tone.octoblu.com
-    endpoint: tone.octoblu.com.s3-website-us-west-2.amazonaws.com
-    region: us-west-2
-    local-dir: build
-    skip_cleanup: true
-    acl: public_read
-    on:
-      branch: master
-  - provider: opsworks
-    access_key_id: AKIAIT4X4NDGM2WVL6VA
-    secret_access_key:
-      secure: fbDjFCr1so0Z5K9E2Tihle5X0JKXjFFT8Ve7WEVGMus+1MRfFaZOqUXBwxDyvUI25ob35lmuzXosCGgvlfQHrBHw4SxsBCMUYKU3jxmFgiA9qjHxytoNYB0BQIZNqQ9FjnrnTqG45zFgDBpXSGgqR0UZT66QNepLf3qWfAQFqkI=
-    app-id: b9539df9-6f39-451f-9181-054aaa3ddc95
-    on:
-      branch: master
+- provider: s3
+  access_key_id: AKIAJH2D5IPIRHYJT5IA
+  secret_access_key: &1
+    secure: UNBfBo3WjjxAMiHsY+1jcfXe2i3udwFvSsveT9KBxdOsQMrUL1whaCbzGoABrHZ/iF5LL8fPM2YsbpwfR3f3MLt5TO6+4+sO4NIJeLe0cpfTSdrYwcb3Z7n6BohiI5QX5+IhD/Nsa9VA8MERQFEuWb/M2+7GUL6ep6ZIGQr6clE=
+  bucket: tone.octoblu.com
+  endpoint: tone.octoblu.com.s3-website-us-west-2.amazonaws.com
+  region: us-west-2
+  local-dir: build
+  skip_cleanup: true
+  acl: public_read
+  on:
+    branch: master
+- provider: opsworks
+  access_key_id: AKIAJH2D5IPIRHYJT5IA
+  secret_access_key: *1
+  app-id: b9539df9-6f39-451f-9181-054aaa3ddc95
+  on:
+    branch: master
